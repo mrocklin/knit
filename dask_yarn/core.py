@@ -34,8 +34,8 @@ class YARNCluster(object):
             env = os.path.join(CondaCreator().conda_envs, env_name + '.zip')
         else:
             env = self.knit.create_env(env_name=env_name, packages=self.packages)
-        command = ('$PYTHON_BIN $CONDA_PREFIX/bin/dask-worker %s > /tmp/worker-log.out 2> /tmp/worker-log-err' %
-                   self.local_cluster.scheduler.address)
+        command = ('$PYTHON_BIN $CONDA_PREFIX/bin/dask-worker %s' %
+                   self.scheduler_address)
         app_id = self.knit.start(command, env=env, num_containers=n_workers,
                                  virtual_cores=cpus, memory=memory)
         self.app_id = app_id
